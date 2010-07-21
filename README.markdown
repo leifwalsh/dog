@@ -19,7 +19,8 @@ Any options are an error.  Use like this:
 BUGS
 ----
 
-There are none.  Really, try to find one.
+There are none.  Really, try to find one.  I'll bake you some cookies if you
+find one.
 
 TODO
 ----
@@ -31,3 +32,8 @@ AUTHORS
 -------
 
 * Leif Walsh <leif.walsh@gmail.com>
+
+COPYING
+-------
+
+Do whatever you want.

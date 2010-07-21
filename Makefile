@@ -1,3 +1,6 @@
+# lots of shit here stolen from elsewhere, most notably the linux kernel's
+# makefiles
+
 CFLAGS+=-Wall -Werror -Wextra -D_FILE_OFFSET_BITS=64 -D_BSD_SOURCE
 LDFLAGS+=-g3
 
@@ -27,12 +30,15 @@ else
 	Q=@
 endif
 
-.PHONY: all clean allclean
+.PHONY: all check clean allclean
 
 all: $(BINS) TAGS tags cscope.out
 
 dog: $(dog_OBJS)
 	@echo "   $($(quiet)cmd_ld_bin_o)"; $(cmd_ld_bin_o)
+
+check: $(BINS)
+	$(Q)./test.sh && echo "pass!"
 
 .objs/%.o: .deps/%.d
 .deps/%.d: %.c
