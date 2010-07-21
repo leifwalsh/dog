@@ -1,7 +1,7 @@
 dog
 ===
 
-the inverse of `cat`.
+the inverse of `cat`
 
 SYNOPSIS
 --------
