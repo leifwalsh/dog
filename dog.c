@@ -10,6 +10,21 @@
 
 #define PROG() (prog ? prog : argv[0])
 
+#ifdef _DAMMIT_GIMME_THE_CRACK_ALREADY
+
+#define PERROR(...) 
+#define PFAIL(...) 
+#define PFAILIF(...) 
+#define ERR(...) 
+#define FAIL(...) 
+#define FAILIF(...) 
+
+#define malloc_chk(p, type, sz) do { (p) = type malloc(sz); } while (0)
+#define free_chk(p) free(p)
+#define close_chk(fd) close(fd)
+
+#else  /* this is the safe one */
+
 #define PERROR() perror(PROG())
 
 #define PFAIL()                                 \
@@ -44,7 +59,7 @@
 
 #define malloc_chk(p, type, sz)                 \
     do {                                        \
-        (p) = (type *) malloc(sz);              \
+        (p) = type malloc(sz);                  \
         PFAILIF(!(p));                          \
     } while (0)
 
@@ -56,6 +71,15 @@
         }                                       \
     } while (0)
 
+#define close_chk(fd)                           \
+    do {                                        \
+        if ((fd) >= 0) {                        \
+            close(fd);                          \
+            fd = -1;                            \
+        }                                       \
+    } while (0)
+
+#endif
 
 int main(int argc, char *argv[])
 {
@@ -80,9 +104,10 @@ int main(int argc, char *argv[])
 
     FAILIF((argc > 1), 2, "invalid argument: %s\n", argv[1]);
 
-    PFAILIF((fd = mkstemp(filename)) < 0);
+    fd = mkstemp(filename);
+    PFAILIF(fd < 0);
     page_size = getpagesize();
-    malloc_chk(buf, char, page_size);
+    malloc_chk(buf, (char *), page_size);
     while ((sz_read = read(STDIN_FILENO, buf, page_size)) > 0) {
         while (sz_read) {
             sz_written = write(fd, buf, sz_read);
@@ -96,9 +121,7 @@ int main(int argc, char *argv[])
     printf("%s\n", filename);
 cleanup:
     free_chk(buf);
-    if (fd >= 0) {
-        PFAILIF(close(fd) < 0);
-    }
+    close_chk(fd);
     free_chk(prog);
     exit(ret);
 }
