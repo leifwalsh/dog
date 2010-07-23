@@ -1,4 +1,4 @@
-/* copyright 2010 leif walsh, larry's artistic license or maybe bsd I guess.  I
+/* copyright 2010 leif walsh, perl artistic license or maybe bsd I guess.  I
    don't care, this was just a little catharsis for me tonight. */
 
 #include <errno.h>
