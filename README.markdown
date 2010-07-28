@@ -36,4 +36,4 @@ AUTHORS
 COPYING
 -------
 
-Do whatever you want.
+See COPYING in this folder.

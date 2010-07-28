@@ -1,5 +1,4 @@
-/* copyright 2010 leif walsh, perl artistic license or maybe bsd I guess.  I
-   don't care, this was just a little catharsis for me tonight. */
+/* Copyright 2010 Leif Walsh.  See COPYING for details. */
 
 #include <errno.h>
 #include <libgen.h>
